@@ -536,6 +536,13 @@ impl Capture<Inactive> {
         self
     }
 
+    /// Set immediate mode
+    #[cfg(not(windows))]
+    pub fn immediate_mode(self, enable: bool) -> Capture<Inactive> {
+        unsafe { raw::pcap_set_immediate_mode(*self.handle, enable as _) };
+        self
+    }
+
     /// Set promiscuous mode on or off. By default, this is off.
     pub fn promisc(self, to: bool) -> Capture<Inactive> {
         unsafe { raw::pcap_set_promisc(*self.handle, to as _) };
